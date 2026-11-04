@@ -16,6 +16,8 @@ The preview reloads automatically every time you save a file. Stop it with `Ctrl
 
 ## 2. Where to edit things
 
+> The Writing section (blog and reading list) is currently hidden. To show it again, set `showWriting: true` in `src/site.config.ts` and rename `src/pages/_writing` to `src/pages/writing`.
+
 | What you want to change | File |
 | --- | --- |
 | Name, intro sentence, email, LinkedIn, GitHub, rotating words | `src/site.config.ts` |

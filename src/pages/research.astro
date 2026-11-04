@@ -34,7 +34,7 @@ const interests = [
   />
 
   <section class="wrap">
-    <div class="question-box">
+    <div class="glow glow-card question-box">
       <h2 class="display text-[clamp(1.5rem,1.1rem+1.5vw,2.25rem)] leading-tight">
         The question I want to pursue: why do neurons learn differently in a living brain than in a dish?
       </h2>
@@ -63,21 +63,10 @@ const interests = [
 
 <style>
   .question-box {
-    position: relative;
     padding: clamp(1.5rem, 4vw, 2.75rem);
-    border-radius: 14px;
-    background: var(--color-surface-raised);
-    border: 1px solid var(--color-line);
-    overflow: hidden;
   }
-  .question-box::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--gradient);
+  .question-box:hover {
+    transform: none;
   }
   .interests {
     display: grid;

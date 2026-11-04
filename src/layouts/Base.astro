@@ -32,11 +32,36 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonical} />
   </head>
   <body>
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 btn-gradient">Skip to content</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 glow btn btn-primary">Skip to content</a>
     <Nav />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <script>
+      // Feeds the pointer position to every .glow surface as --x / --y (relative to each element).
+      let frame = 0;
+      let px = 0;
+      let py = 0;
+      const update = () => {
+        frame = 0;
+        for (const el of document.querySelectorAll<HTMLElement>('.glow')) {
+          const r = el.getBoundingClientRect();
+          // Skip elements far off screen
+          if (r.bottom < -400 || r.top > window.innerHeight + 400) continue;
+          el.style.setProperty('--x', `${px - r.left}px`);
+          el.style.setProperty('--y', `${py - r.top}px`);
+        }
+      };
+      const track = (e: PointerEvent) => {
+        px = e.clientX;
+        py = e.clientY;
+        document.documentElement.classList.add('has-pointer');
+        if (!frame) frame = requestAnimationFrame(update);
+      };
+      document.addEventListener('pointermove', track, { passive: true });
+      document.addEventListener('pointerdown', track, { passive: true });
+      window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+    </script>
   </body>
 </html>

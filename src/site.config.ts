@@ -35,6 +35,10 @@ export const site = {
   cvPdf: '',
 
   location: 'Helsinki, Finland',
+
+  // Writing (blog + reading list) is switched off for now.
+  // To bring it back: set this to true AND rename src/pages/_writing to src/pages/writing.
+  showWriting: false,
 };
 
 // Education and research path, newest first. Shown as the timeline.
@@ -65,6 +69,6 @@ export const path = [
 export const nav = [
   { href: '/research', label: 'Research' },
   { href: '/projects', label: 'Projects' },
-  { href: '/writing', label: 'Writing' },
+  ...(site.showWriting ? [{ href: '/writing', label: 'Writing' }] : []),
   { href: '/cv', label: 'CV' },
 ];

@@ -12,8 +12,8 @@ import { site } from '../site.config';
 import { getPosts, getProjects, getReading } from '../lib/content';
 
 const projects = (await getProjects()).slice(0, 3);
-const posts = (await getPosts()).slice(0, 3);
-const reading = (await getReading()).slice(0, 3);
+const posts = site.showWriting ? (await getPosts()).slice(0, 3) : [];
+const reading = site.showWriting ? (await getReading()).slice(0, 3) : [];
 ---
 
 <Base>
@@ -27,10 +27,10 @@ const reading = (await getReading()).slice(0, 3);
         Currently thinking about <RotatingWord client:load words={site.thinkingAbout} />
       </p>
       <div class="mt-9 flex flex-wrap gap-3">
-        <a href={url('/research')} class="btn-gradient">Read my research question</a>
+        <a href={url('/research')} class="glow btn btn-primary">Read my research question</a>
         {
           site.cvPdf && (
-            <a href={url(site.cvPdf)} class="btn-quiet" download>
+            <a href={url(site.cvPdf)} class="glow btn" download>
               <Icon name="download" /> Download CV
             </a>
           )
@@ -38,8 +38,8 @@ const reading = (await getReading()).slice(0, 3);
       </div>
     </div>
     <p class="wrap board-caption">
-      Behind this text: Brian’s Brain, a cellular automaton in which each cell fires, rests and recovers. Move your
-      cursor or drag a finger across it to stimulate the cells.
+      Behind this text: a simulated sheet of excitable cells (Brian’s Brain), shown as in calcium imaging: each cell
+      flashes when it fires and fades as it recovers. Move your cursor or tap to stimulate it.
     </p>
   </section>
 
@@ -81,6 +81,8 @@ const reading = (await getReading()).slice(0, 3);
     <ProjectList projects={projects} />
   </section>
 
+  {
+    site.showWriting && (
   <section class="wrap mt-24 sm:mt-32" aria-labelledby="writing">
     <div class="grid gap-16 lg:grid-cols-2">
       <div>
@@ -99,6 +101,8 @@ const reading = (await getReading()).slice(0, 3);
       </div>
     </div>
   </section>
+    )
+  }
 </Base>
 
 <style>

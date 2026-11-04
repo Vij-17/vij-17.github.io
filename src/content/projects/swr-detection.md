@@ -1,7 +1,7 @@
 ---
 title: Detecting sharp-wave ripples in primate hippocampal recordings
 period: Jan – Apr 2026
-summary: An honours-thesis pipeline that turns raw Plexon recordings into curated sharp-wave ripple events for analysis.
+summary: Detecting Sharp-wave ripples in primate hippocampus wideband LFP recording during rapid associative learning task.
 tools: [MATLAB, Brainstorm, Plexon .pl2]
 order: 1
 ---

@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
  *   ready      → fires if exactly two neighbours are firing
  *   firing     → becomes refractory on the next step
  *   refractory → becomes ready again
- * Firing cells are drawn with the pink–orange gradient, refractory cells as faint grey dots.
+ * Firing cells are drawn with the cuicui gradient (sky → violet → orange), refractory cells as faint grey dots.
  * Moving the pointer over the board stimulates the cells beneath it.
  */
 
@@ -71,13 +71,17 @@ export default function NeuralBoard({ cell = 9, tickMs = 130 }: Props) {
       grid = new Uint8Array(cols * rows);
       next = new Uint8Array(cols * rows);
 
-      // Pre-compute one gradient colour per column (pink on the left → orange on the right).
+      // Pre-compute one gradient colour per column: sky-400 → violet-500 → orange-400, left to right.
+      const stops = [
+        [56, 189, 248],
+        [139, 92, 246],
+        [251, 146, 60],
+      ];
       colours = Array.from({ length: cols }, (_, x) => {
         const t = cols > 1 ? x / (cols - 1) : 0;
-        // cuicui pink #e34ba9 → orange #fb923c
-        const r = Math.round(227 + (251 - 227) * t);
-        const g = Math.round(75 + (146 - 75) * t);
-        const b = Math.round(169 + (60 - 169) * t);
+        const seg = t < 0.5 ? 0 : 1;
+        const u = t < 0.5 ? t * 2 : (t - 0.5) * 2;
+        const [r, g, b] = [0, 1, 2].map((i) => Math.round(stops[seg][i] + (stops[seg + 1][i] - stops[seg][i]) * u));
         return `rgb(${r} ${g} ${b})`;
       });
 

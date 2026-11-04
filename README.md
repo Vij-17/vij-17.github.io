@@ -51,17 +51,10 @@ Create `src/content/reading/author-year-topic.md` with `title`, `authors`, `venu
 
 ## 3. Publishing (GitHub Pages)
 
-The site lives in the repository `Vij-17/SaiVijwalNulakajodu.github.io` and is published at
-**https://vij-17.github.io/SaiVijwalNulakajodu.github.io/**.
+The site lives in the repository `Vij-17/vij-17.github.io` and is published at **https://vij-17.github.io**.
 
 - One-time setting: on GitHub, open the repository → **Settings → Pages** → set **Source** to **GitHub Actions**.
 - After that, every push to `main` rebuilds and republishes the site automatically (watch the **Actions** tab for the green tick).
-
-### Getting the shorter address https://vij-17.github.io
-
-GitHub only serves a site at the root address when the repository is named exactly `<username>.github.io`.
-To switch: rename the repository to `vij-17.github.io` (repository **Settings → General → Repository name**),
-then delete the `base:` line in `astro.config.mjs` and push. All internal links adapt automatically.
 
 ## 4. Adding components from cuicui.day
 
@@ -72,7 +65,7 @@ then delete the `base:` line in `astro.config.mjs` and push. All internal links 
 
 cuicui is MIT-licensed: keep a note of the source at the top of each copied file.
 
-The theme colours are available as Tailwind classes, for example `bg-surface`, `bg-surface-raised`, `border-line`, `text-fg`, `text-fg-muted`, `text-pink`, `text-orange` and `font-display`.
+The theme colours are available as Tailwind classes, for example `bg-surface`, `bg-surface-raised`, `border-line`, `text-fg`, `text-fg-muted`, `text-sky`, `text-violet`, `text-orange` and `font-display`.
 
 ## How the hero background works
 

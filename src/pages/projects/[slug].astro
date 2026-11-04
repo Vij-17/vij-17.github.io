@@ -1,0 +1,34 @@
+---
+import { url } from '../../lib/url';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getProjects } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Base title={project.data.title} description={project.data.summary}>
+  <article class="wrap pt-14 sm:pt-20">
+    <a href={url('/projects')} class="text-link text-[0.95rem]">All projects</a>
+    <h1 class="display mt-6 max-w-[22ch] text-[clamp(2rem,1.4rem+2.6vw,3.25rem)]">{project.data.title}</h1>
+    <p class="mt-4 text-fg-muted">{project.data.period}</p>
+    {
+      project.data.tools.length > 0 && (
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {project.data.tools.map((t) => (
+            <li class="rounded-full border border-line px-2.5 py-0.5 text-[0.85rem] text-fg-muted">{t}</li>
+          ))}
+        </ul>
+      )
+    }
+    <div class="prose-site mt-12">
+      <Content />
+    </div>
+  </article>
+</Base>

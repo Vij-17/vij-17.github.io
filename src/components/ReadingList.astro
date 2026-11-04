@@ -1,0 +1,31 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+interface Props {
+  items: CollectionEntry<'reading'>[];
+  showNotes?: boolean;
+}
+const { items, showNotes = true } = Astro.props;
+const entries = await Promise.all(items.map(async (item) => ({ item, Content: (await render(item)).Content })));
+---
+
+<ul class="space-y-8">
+  {
+    entries.map(({ item, Content }) => (
+      <li class="max-w-[42rem]">
+        <a href={item.data.url} target="_blank" rel="noopener" class="group">
+          <span class="font-medium text-[1.08rem] group-hover:text-orange transition-colors">{item.data.title}</span>
+          <Icon name="external" class="ml-1 -translate-y-px text-fg-muted" />
+        </a>
+        <p class="text-[0.95rem] text-fg-muted">
+          {item.data.authors}, <em>{item.data.venue}</em> ({item.data.year})
+        </p>
+        {showNotes && (
+          <div class="prose-site mt-2">
+            <Content />
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ul>

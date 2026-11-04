@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// Each interest is a short paragraph; edit, reorder or add freely.
+const interests = [
+  {
+    title: 'Learning in vitro versus in vivo',
+    body: 'Cultured cortical neurons adapt their activity when embedded in a closed sensory–motor loop, yet they learn more slowly and retain less than the same cells in an intact brain. I want to identify which properties of natural input (temporal correlation, multiscale spatial structure, behavioural contingency) are missing from artificial stimulation.',
+  },
+  {
+    title: 'Coordination between brain regions',
+    body: 'Hippocampal sharp-wave ripples coincide with the reactivation of recent experience in the neocortex, which is thought to consolidate memory. My honours thesis focused on detecting these events in primate recordings; the broader question is how two regions time their activity so precisely.',
+  },
+  {
+    title: 'Plasticity and recovery after damage',
+    body: 'When part of the brain is lost, the remaining circuits often reorganise to recover function. I am interested in the rules that govern this rewiring and in what they reveal about plasticity in the healthy brain.',
+  },
+  {
+    title: 'Emergence and self-organisation',
+    body: 'A single cell develops into an organism, and a regenerating tissue knows when to stop growing. Both depend on local interactions producing global order. I find the same question in neural circuits: how cognition emerges from cells that each follow simple rules.',
+  },
+  {
+    title: 'Living neurons and silicon',
+    body: 'In the long term I want to work at the interface of biological neural systems and computing hardware, through neuromorphic engineering, neuroAI and biological computing with neuronal cultures and organoids.',
+  },
+];
+---
+
+<Base title="Research" description="Research interests and the long-term question I want to pursue.">
+  <PageHeader
+    title="Research"
+    lead="I want to answer basic questions about how neurons compute and learn before moving to disease-focused work."
+  />
+
+  <section class="wrap">
+    <div class="question-box">
+      <h2 class="display text-[clamp(1.5rem,1.1rem+1.5vw,2.25rem)] leading-tight">
+        The question I want to pursue: why do neurons learn differently in a living brain than in a dish?
+      </h2>
+      <p class="mt-5 max-w-[40rem] text-fg-muted">
+        Natural sensory input may carry temporal and spatial structure that artificial electrical stimulation lacks. If
+        so, enriching the statistical structure of stimulation should move culture learning towards in vivo behaviour.
+        This is a hypothesis; testing it is the plan for my MSc thesis and PhD.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="interests">
+    <h2 id="interests" class="section-title mb-10">Interests</h2>
+    <dl class="interests">
+      {
+        interests.map((item) => (
+          <div class="interest">
+            <dt class="font-semibold text-[1.1rem]">{item.title}</dt>
+            <dd class="mt-2 text-fg/90">{item.body}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+</Base>
+
+<style>
+  .question-box {
+    position: relative;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border-radius: 14px;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+  .question-box::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gradient);
+  }
+  .interests {
+    display: grid;
+    gap: 2.5rem 4rem;
+    max-width: 62rem;
+  }
+  @media (min-width: 820px) {
+    .interests {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .interest {
+    max-width: 30rem;
+  }
+</style>

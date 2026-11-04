@@ -1,0 +1,246 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/400-italic.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+
+/* Design tokens, taken from cuicui.day's dark theme: the Tailwind neutral scale
+   (neutral-950 page, neutral-900 raised surfaces, neutral-800 lines, neutral-50 text, neutral-400 muted text)
+   plus two of cuicui's accent hues (#e34ba9 pink and orange-400 #fb923c).
+   Tailwind exposes them as bg-surface, text-fg, text-fg-muted, border-line, text-pink, text-orange, font-display. */
+@theme {
+  --color-surface: #0a0a0a;
+  --color-surface-deep: #0a0a0a;
+  --color-surface-raised: #171717;
+  --color-fg: #fafafa;
+  --color-fg-muted: #a3a3a3;
+  --color-line: #262626;
+  --color-pink: #e34ba9;
+  --color-orange: #fb923c;
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+:root {
+  --gradient: linear-gradient(100deg, var(--color-pink) 0%, var(--color-orange) 100%);
+  /* Static noise texture from cuicui.day (MIT licence) */
+  --grain: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 700' width='700' height='700'%3e%3cdefs%3e%3cfilter id='n' x='-20%25' y='-20%25' width='140%25' height='140%25' filterUnits='objectBoundingBox' primitiveUnits='userSpaceOnUse' color-interpolation-filters='linearRGB'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='0.2' numOctaves='4' seed='15' stitchTiles='stitch' result='t'/%3e%3cfeSpecularLighting surfaceScale='5' specularConstant='0.8' specularExponent='20' lighting-color='white' in='t' result='s'%3e%3cfeDistantLight azimuth='3' elevation='96'/%3e%3c/feSpecularLighting%3e%3cfeColorMatrix type='saturate' values='0' in='s'/%3e%3c/filter%3e%3c/defs%3e%3crect width='700' height='700' fill='black'/%3e%3crect width='700' height='700' fill='white' filter='url(%23n)'/%3e%3c/svg%3e");
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-surface-deep);
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--color-fg);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Noise layer over the whole page, as on cuicui.day */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  background-size: 400px;
+  opacity: 0.05;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgb(227 75 169 / 0.35);
+  color: var(--color-fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Reusable pieces ─────────────────────────────────────────── */
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+.measure {
+  max-width: 40rem;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* Links in running text: grey underline that fills with the gradient on hover */
+.text-link {
+  color: var(--color-fg);
+  text-decoration: none;
+  background-image: linear-gradient(var(--color-line), var(--color-line)), var(--gradient);
+  background-size: 100% 1px, 0% 1px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.35s ease, color 0.2s ease;
+  padding-bottom: 1px;
+}
+.text-link:hover {
+  background-size: 100% 1px, 100% 1px;
+}
+
+/* Gradient-bordered button, used once or twice per page */
+.btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 500;
+  color: var(--color-surface-deep);
+  background: var(--gradient);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -10px rgb(227 75 169 / 0.45);
+}
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  color: var(--color-fg);
+  border: 1px solid var(--color-line);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.btn-quiet:hover {
+  border-color: rgb(250 250 250 / 0.25);
+  background: rgb(250 250 250 / 0.04);
+}
+
+/* ── Long-form text (blog posts, project pages) ──────────────── */
+
+.prose-site {
+  max-width: 40rem;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.prose-site > * + * {
+  margin-top: 1.15em;
+}
+.prose-site h2 {
+  margin-top: 2.2em;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+.prose-site h3 {
+  margin-top: 1.8em;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.prose-site a {
+  color: var(--color-orange);
+  text-decoration: underline;
+  text-decoration-color: rgb(251 146 60 / 0.4);
+  text-underline-offset: 3px;
+}
+.prose-site a:hover {
+  text-decoration-color: var(--color-orange);
+}
+.prose-site ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.prose-site ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+.prose-site li + li {
+  margin-top: 0.4em;
+}
+.prose-site li::marker {
+  color: var(--color-pink);
+}
+.prose-site blockquote {
+  border-left: 2px solid;
+  border-image: var(--gradient) 1;
+  padding-left: 1rem;
+  color: var(--color-fg-muted);
+  font-style: italic;
+}
+.prose-site code {
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--color-surface-raised);
+}
+.prose-site pre {
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  background: var(--color-surface-deep) !important;
+}
+.prose-site pre code {
+  padding: 0;
+  background: none;
+}
+.prose-site img {
+  border-radius: 8px;
+}
+.prose-site em {
+  color: var(--color-fg-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

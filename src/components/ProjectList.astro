@@ -1,0 +1,31 @@
+---
+import { url } from '../lib/url';
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+const { projects } = Astro.props;
+---
+
+<ul class="divide-y divide-line border-y border-line">
+  {
+    projects.map((p) => (
+      <li>
+        <a href={url(`/projects/${p.id}`)} class="project-row group grid gap-1 py-6 sm:grid-cols-[9rem_1fr] sm:gap-8">
+          <span class="text-[0.95rem] text-fg-muted pt-1">{p.data.period}</span>
+          <span>
+            <span class="display block text-[1.45rem] leading-snug group-hover:text-orange transition-colors">{p.data.title}</span>
+            <span class="mt-1 block max-w-[38rem] text-fg-muted">{p.data.summary}</span>
+            {p.data.tools.length > 0 && (
+              <span class="mt-3 flex flex-wrap gap-2">
+                {p.data.tools.map((t) => (
+                  <span class="rounded-full border border-line px-2.5 py-0.5 text-[0.85rem] text-fg-muted">{t}</span>
+                ))}
+              </span>
+            )}
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

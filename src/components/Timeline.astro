@@ -1,0 +1,78 @@
+---
+import { path } from '../site.config';
+---
+
+<!-- A vertical stepper: one thin line, one node per step; the current step glows. -->
+<ol class="timeline">
+  {
+    path.map((step) => (
+      <li class:list={['step', { current: step.current }]}>
+        <span class="node" aria-hidden="true" />
+        <p class="when">{step.when}</p>
+        <h3 class="title">{step.title}</h3>
+        <p class="where">{step.where}</p>
+        <p class="detail">{step.detail}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    position: relative;
+    max-width: 44rem;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.4rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: linear-gradient(var(--color-line), var(--color-line)) center / 1px 100% no-repeat;
+  }
+  .step {
+    position: relative;
+    padding-bottom: 2.25rem;
+  }
+  .step:last-child {
+    padding-bottom: 0;
+  }
+  .node {
+    position: absolute;
+    left: -2rem;
+    top: 0.45rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 1.5px solid rgb(250 250 250 / 0.35);
+  }
+  .current .node {
+    border: none;
+    background: var(--gradient);
+    box-shadow: 0 0 0 4px rgb(227 75 169 / 0.15), 0 0 18px rgb(227 75 169 / 0.45);
+  }
+  .when {
+    font-size: 0.9rem;
+    color: var(--color-fg-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .current .when {
+    color: var(--color-orange);
+  }
+  .title {
+    margin-top: 0.15rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+  .where {
+    color: var(--color-fg-muted);
+  }
+  .detail {
+    margin-top: 0.4rem;
+    max-width: 38rem;
+  }
+</style>

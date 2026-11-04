@@ -1,0 +1,34 @@
+---
+import { url } from '../lib/url';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/content';
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+const { posts } = Astro.props;
+---
+
+{
+  posts.length === 0 ? (
+    <p class="text-fg-muted max-w-[38rem]">
+      No posts yet. The first one is on its way.
+    </p>
+  ) : (
+    <ul class="space-y-7">
+      {posts.map((post) => (
+        <li class="max-w-[40rem]">
+          <a href={url(`/writing/${post.id}`)} class="group block">
+            <time datetime={post.data.date.toISOString()} class="text-[0.9rem] text-fg-muted">
+              {formatDate(post.data.date)}
+              {post.data.draft && <span class="ml-2 text-orange">draft</span>}
+            </time>
+            <span class="display mt-1 block text-[1.45rem] leading-snug group-hover:text-orange transition-colors">
+              {post.data.title}
+            </span>
+            <span class="mt-1 block text-fg-muted">{post.data.summary}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

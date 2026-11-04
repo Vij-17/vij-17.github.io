@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import { getProjects } from '../../lib/content';
+const projects = await getProjects();
+---
+
+<Base title="Projects" description="Research projects and analysis work.">
+  <PageHeader title="Projects" lead="Research and analysis work, with what I built and what I learnt from it." />
+  <section class="wrap">
+    <ProjectList projects={projects} />
+  </section>
+</Base>

@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../site.config';
+
+const { links } = site;
+const items = [
+  links.email && { href: `mailto:${links.email}`, label: 'Email', icon: 'mail' },
+  links.linkedin && { href: links.linkedin, label: 'LinkedIn', icon: 'linkedin' },
+  links.github && { href: links.github, label: 'GitHub', icon: 'github' },
+  links.orcid && { href: links.orcid, label: 'ORCID', icon: 'orcid' },
+  links.scholar && { href: links.scholar, label: 'Google Scholar', icon: 'scholar' },
+].filter(Boolean) as { href: string; label: string; icon: 'mail' | 'linkedin' | 'github' | 'orcid' | 'scholar' }[];
+---
+
+<ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+  {
+    items.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          class="inline-flex items-center gap-2 text-fg-muted hover:text-fg transition-colors"
+          rel={item.href.startsWith('http') ? 'me noopener' : undefined}
+          target={item.href.startsWith('http') ? '_blank' : undefined}
+        >
+          <Icon name={item.icon} />
+          {item.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>

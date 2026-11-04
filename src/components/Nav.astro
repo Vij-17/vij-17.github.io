@@ -1,0 +1,48 @@
+---
+import { url, stripBase } from '../lib/url';
+import { site, nav } from '../site.config';
+const current = stripBase(Astro.url.pathname);
+---
+
+<header class="wrap flex flex-col items-start gap-3 py-5 sm:flex-row sm:items-center sm:justify-between">
+  <a href={url('/')} class="display text-xl text-fg hover:text-orange transition-colors">{site.name}</a>
+  <nav aria-label="Main">
+    <ul class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[0.95rem]">
+      {
+        nav.map((item) => {
+          const active = current === item.href || current.startsWith(item.href + '/');
+          return (
+            <li>
+              <a
+                href={url(item.href)}
+                aria-current={active ? 'page' : undefined}
+                class:list={['nav-link', active ? 'text-fg' : 'text-fg-muted hover:text-fg']}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav-link {
+    position: relative;
+    padding-block: 0.25rem;
+    transition: color 0.2s ease;
+  }
+  /* Active page: a short gradient stroke under the link */
+  .nav-link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gradient);
+  }
+</style>

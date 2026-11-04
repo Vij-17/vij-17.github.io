@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PostList from '../../components/PostList.astro';
+import ReadingList from '../../components/ReadingList.astro';
+import { getPosts, getReading } from '../../lib/content';
+const posts = await getPosts();
+const reading = await getReading();
+---
+
+<Base title="Writing" description="Notes on neuroscience and papers worth reading.">
+  <PageHeader title="Writing" lead="Notes on what I am learning, and papers I think are worth your time." />
+
+  <section class="wrap" aria-labelledby="posts">
+    <h2 id="posts" class="section-title mb-8">Posts</h2>
+    <PostList posts={posts} />
+  </section>
+
+  <section id="reading" class="wrap mt-24 scroll-mt-8" aria-labelledby="reading-title">
+    <h2 id="reading-title" class="section-title">Worth reading</h2>
+    <p class="mb-10 mt-3 max-w-[38rem] text-fg-muted">Papers and articles I return to, each with a short note on why.</p>
+    <ReadingList items={reading} />
+  </section>
+</Base>

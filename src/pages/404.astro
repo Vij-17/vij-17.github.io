@@ -1,0 +1,14 @@
+---
+import { url } from '../lib/url';
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <section class="wrap pt-24 pb-10">
+    <h1 class="display gradient-text text-[clamp(3rem,2rem+5vw,6rem)]">Not here</h1>
+    <p class="mt-5 max-w-[34rem] text-[1.15rem] text-fg-muted">
+      This page does not exist, or it has moved. Try the home page or the navigation above.
+    </p>
+    <a href={url('/')} class="btn-gradient mt-8">Go to the home page</a>
+  </section>
+</Base>

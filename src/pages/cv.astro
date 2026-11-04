@@ -1,0 +1,51 @@
+---
+import { url } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Timeline from '../components/Timeline.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../site.config';
+
+// Keep these honest: they are read by people who may test them in an interview.
+const skills = [
+  { group: 'Electrophysiology', items: 'LFP preprocessing and event detection; Plexon .pl2 recordings; Brainstorm' },
+  { group: 'Programming', items: 'MATLAB; Python (learning, with NumPy and TensorFlow environments); Git (learning)' },
+  { group: 'Laboratory', items: 'Molecular biology and biotechnology foundations; animal-procedures training (in progress)' },
+];
+const languages = 'English, Hindi and Telugu (fluent); Spanish (A1); Finnish (starting)';
+---
+
+<Base title="CV" description="Education, research experience and skills.">
+  <PageHeader title="CV" lead="A short version. The PDF has full details.">
+    {
+      site.cvPdf && (
+        <a href={url(site.cvPdf)} class="btn-gradient mt-8" download>
+          <Icon name="download" /> Download PDF
+        </a>
+      )
+    }
+  </PageHeader>
+
+  <section class="wrap" aria-labelledby="education">
+    <h2 id="education" class="section-title mb-10">Education and research</h2>
+    <Timeline />
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="skills">
+    <h2 id="skills" class="section-title mb-8">Skills</h2>
+    <dl class="max-w-[44rem] divide-y divide-line border-y border-line">
+      {
+        skills.map((s) => (
+          <div class="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+            <dt class="font-semibold">{s.group}</dt>
+            <dd class="text-fg/90">{s.items}</dd>
+          </div>
+        ))
+      }
+      <div class="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+        <dt class="font-semibold">Languages</dt>
+        <dd class="text-fg/90">{languages}</dd>
+      </div>
+    </dl>
+  </section>
+</Base>

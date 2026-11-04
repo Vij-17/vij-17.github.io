@@ -1,0 +1,25 @@
+---
+import { url } from '../../lib/url';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title} description={post.data.summary}>
+  <article class="wrap pt-14 sm:pt-20">
+    <a href={url('/writing')} class="text-link text-[0.95rem]">All writing</a>
+    <h1 class="display mt-6 max-w-[22ch] text-[clamp(2rem,1.4rem+2.6vw,3.25rem)]">{post.data.title}</h1>
+    <time datetime={post.data.date.toISOString()} class="mt-4 block text-fg-muted">{formatDate(post.data.date)}</time>
+    <div class="prose-site mt-12">
+      <Content />
+    </div>
+  </article>
+</Base>

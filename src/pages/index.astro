@@ -57,10 +57,10 @@ const reading = site.showWriting ? (await getReading()).slice(0, 3) : [];
         <a href={url('/research')} class="text-link mt-5 inline-block">More on my research interests</a>
       </div>
       <aside class="self-start border-l border-line pl-6 text-[0.98rem]">
-        <p class="text-fg-muted">Also drawn to</p>
+        <p class="text-fg-muted">Other interests</p>
         <ul class="mt-2 space-y-1.5">
           <li>Hippocampal–neocortical coordination during sleep and rest</li>
-          <li>How the brain rewires after damage</li>
+          <li>How transplanted neurons integrate into a host brain</li>
           <li>Emergence: how simple local rules build an organism</li>
           <li>Interfacing living neurons with silicon</li>
         </ul>
@@ -69,14 +69,14 @@ const reading = site.showWriting ? (await getReading()).slice(0, 3) : [];
   </section>
 
   <section class="wrap mt-24 sm:mt-32" aria-labelledby="path">
-    <h2 id="path" class="section-title mb-10">Path so far</h2>
+    <h2 id="path" class="section-title mb-10">Education</h2>
     <Timeline />
   </section>
 
   <section class="wrap mt-24 sm:mt-32" aria-labelledby="work">
     <div class="mb-8 flex items-baseline justify-between gap-4">
-      <h2 id="work" class="section-title">Selected work</h2>
-      <a href={url('/projects')} class="text-link text-[0.95rem]">All projects</a>
+      <h2 id="work" class="section-title">Research experience and projects</h2>
+      <a href={url('/projects')} class="text-link shrink-0 text-[0.95rem]">View all</a>
     </div>
     <ProjectList projects={projects} />
   </section>

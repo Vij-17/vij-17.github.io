@@ -2,19 +2,20 @@
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 
-// Each interest is a short paragraph; edit, reorder or add freely.
-const interests = [
+// Each interest is a short paragraph; edit, reorder or add freely. `source` is optional.
+const interests: { title: string; body: string; source?: { label: string; href: string } }[] = [
   {
     title: 'Learning in vitro versus in vivo',
     body: 'Cultured cortical neurons adapt their activity when embedded in a closed sensory–motor loop, yet they learn more slowly and retain less than the same cells in an intact brain. I want to identify which properties of natural input (temporal correlation, multiscale spatial structure, behavioural contingency) are missing from artificial stimulation.',
   },
   {
-    title: 'Coordination between brain regions',
-    body: 'Hippocampal sharp-wave ripples coincide with the reactivation of recent experience in the neocortex, which is thought to consolidate memory. My honours thesis focused on detecting these events in primate recordings; the broader question is how two regions time their activity so precisely.',
+    title: 'Plasticity and the integration of new neurons',
+    body: 'Revah and colleagues transplanted human cortical organoids into the somatosensory cortex of newborn rats. The human neurons matured further than the same organoids kept in a dish, received thalamic input, responded to whisker stimulation, and their activation could drive the rats’ reward-seeking behaviour: the host brain wired foreign neurons into its own circuits and learned to use their signals. I want to understand the plasticity that makes this integration possible, and what the host brain provides that a dish does not.',
+    source: { label: 'Revah et al., Nature (2022)', href: 'https://www.nature.com/articles/s41586-022-05277-w' },
   },
   {
-    title: 'Plasticity and recovery after damage',
-    body: 'When part of the brain is lost, the remaining circuits often reorganise to recover function. I am interested in the rules that govern this rewiring and in what they reveal about plasticity in the healthy brain.',
+    title: 'Coordination between brain regions',
+    body: 'Hippocampal sharp-wave ripples coincide with the reactivation of recent experience in the neocortex, which is thought to consolidate memory. My honours thesis focused on detecting these events in primate recordings; the broader question is how two regions time their activity so precisely.',
   },
   {
     title: 'Emergence and self-organisation',
@@ -53,7 +54,14 @@ const interests = [
         interests.map((item) => (
           <div class="interest">
             <dt class="font-semibold text-[1.1rem]">{item.title}</dt>
-            <dd class="mt-2 text-fg/90">{item.body}</dd>
+            <dd class="mt-2 text-fg/90">
+              {item.body}
+              {item.source && (
+                <a href={item.source.href} target="_blank" rel="noopener" class="text-link mt-2 block w-fit text-[0.95rem] text-fg-muted">
+                  {item.source.label}
+                </a>
+              )}
+            </dd>
           </div>
         ))
       }

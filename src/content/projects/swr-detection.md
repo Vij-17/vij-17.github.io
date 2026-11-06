@@ -1,21 +1,15 @@
 ---
-title: Detecting sharp-wave ripples in primate hippocampal recordings
+title: Sharp-wave ripples in the primate hippocampus during associative memory
 period: Jan – Apr 2026
-summary: Detecting Sharp-wave ripples in primate hippocampus wideband LFP recording during rapid associative learning task.
+summary: Detecting sharp-wave ripples in wide-band LFP recordings from the primate hippocampus during a rapid associative learning task.
 tools: [MATLAB, Brainstorm, Plexon .pl2]
 order: 1
 ---
 
-Sharp-wave ripples (SWRs) are brief, high-frequency oscillations (roughly 100–250 Hz, depending on species) riding on a large hippocampal sharp wave; they coincide with the replay of recent experience and are thought to drive memory consolidation in the neocortex. Detecting them reliably is the first problem in any ripple study: thresholds that work in one recording miss events or admit artefacts in the next.
+BSc (Honours) thesis, Department of Life Sciences, GITAM Deemed to be University. Supervisor: Dr Niranjan A. Kambi.
 
-## What I built
+## Abstract
 
-- A preprocessing workflow in Brainstorm and MATLAB that imports Plexon `.pl2` recordings, converts them into analysable formats and filters the local field potential into the ripple band.
-- A threshold-based detection step with documented parameters, so that every run can be reproduced from the raw files.
-- A literature review of machine-learning approaches to ripple detection, which identified open problems in generalising detectors across species and recording set-ups.
+Sharp-wave ripples (SWRs) are brief high-frequency oscillations in the hippocampal local field potential (LFP) that accompany the reactivation of recent experience and are thought to support memory consolidation. I analysed hippocampal LFPs recorded with linear-array electrodes from a non-human primate performing a context-dependent associative (episodic-like) memory task. After correcting acquisition lags in the 40 kHz Plexon wide-band recordings with a custom MATLAB routine, I preprocessed the signals in Brainstorm (resampling to 1,250 Hz, 100–250 Hz band-pass filtering, DC removal, 60 Hz notch filtering, z-scoring, rectification and envelope extraction) and detected ripples as envelope events exceeding 3 SD for at least 20 ms. Across 1,043 trials in one session, 1,340 candidate ripples were detected and aligned to task events. Preliminary results suggest that ripple timing differs between correct and error trials, and 120–140 Hz high-gamma activity appeared during long inter-trial intervals.
 
-## What comes next
-
-I studied and briefly tested the rippl-AI toolbox, which applies convolutional, recurrent and gradient-boosted models to ripple detection, and proposed it as future work; it was not part of the thesis results.
-
-*Replace this text with your own summary; add figures by placing images in `/public/images/` and linking them here.*
+These results come from a single session and need validation across sessions. As a next step, I reviewed machine-learning ripple detectors (rippl-AI: CNN, LSTM, XGBoost) and proposed benchmarking them against spectral detection.

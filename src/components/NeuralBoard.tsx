@@ -252,6 +252,8 @@ export default function NeuralBoard({ cell = 9, tickMs = 120 }: Props) {
       }
 
       const running = !reduceMotion || now < awakeUntil;
+      // With reduced motion, traces fade briefly after you stop, then freeze into a still image.
+      const settling = reduceMotion && now < awakeUntil + 450;
       if (running) {
         acc += dt;
         while (acc >= tickMs) {
@@ -259,11 +261,11 @@ export default function NeuralBoard({ cell = 9, tickMs = 120 }: Props) {
           acc -= tickMs;
         }
       }
-      decay(dt);
+      if (running || settling) decay(dt);
       const lit = draw();
 
       // Keep animating while the sheet runs or traces are still fading.
-      if (running || lit) raf = requestAnimationFrame(frame);
+      if (running || (lit && (!reduceMotion || settling))) raf = requestAnimationFrame(frame);
     };
 
     const wake = () => {

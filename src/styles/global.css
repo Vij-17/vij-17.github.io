@@ -288,7 +288,27 @@ body > * {
   color: var(--color-fg-muted);
 }
 
+/* Typewriter caret for the "Currently thinking about" line */
+.typewriter-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  border-radius: 1px;
+  background: var(--color-violet);
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .typewriter-caret {
+    animation: none !important;
+  }
   html {
     scroll-behavior: auto;
   }

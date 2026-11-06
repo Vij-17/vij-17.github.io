@@ -1,43 +1,61 @@
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 /**
- * Cycles through a list of phrases with a soft vertical blur transition (cuicui-style).
- * With "reduce motion" turned on, the phrases still change, but without the slide and blur.
+ * Typewriter: types a phrase letter by letter, holds it, backspaces it, then types the next one.
+ * Runs with "reduce motion" on too, because nothing moves across the screen; only the caret blink is switched off.
  */
-export default function RotatingWord({ words, interval = 2800 }: { words: string[]; interval?: number }) {
-  const [i, setI] = useState(0);
-  const reduce = useReducedMotion();
+type Props = {
+  words: string[];
+  typeMs?: number; // delay per typed letter
+  deleteMs?: number; // delay per deleted letter
+  holdMs?: number; // how long a finished phrase stays
+  gapMs?: number; // pause between deleting and typing the next phrase
+};
+
+export default function RotatingWord({ words, typeMs = 75, deleteMs = 38, holdMs = 1800, gapMs = 350 }: Props) {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [text, setText] = useState('');
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (words.length < 2) return;
-    const id = window.setInterval(() => setI((n) => (n + 1) % words.length), reduce ? interval * 1.4 : interval);
-    return () => window.clearInterval(id);
-  }, [reduce, words.length, interval]);
+    if (words.length === 0) return;
+    const word = words[wordIndex % words.length];
+    let delay: number;
+    let next: () => void;
+
+    if (!deleting && text === word) {
+      // Finished typing: hold, then start deleting (a single phrase just stays).
+      if (words.length < 2) return;
+      delay = holdMs;
+      next = () => setDeleting(true);
+    } else if (deleting && text === '') {
+      // Finished deleting: short pause, then move to the next phrase.
+      delay = gapMs;
+      next = () => {
+        setDeleting(false);
+        setWordIndex((i) => (i + 1) % words.length);
+      };
+    } else if (deleting) {
+      delay = deleteMs;
+      next = () => setText(word.slice(0, text.length - 1));
+    } else {
+      // Small random variation makes the typing feel human rather than mechanical.
+      delay = typeMs * (0.6 + Math.random() * 0.8);
+      next = () => setText(word.slice(0, text.length + 1));
+    }
+
+    const id = window.setTimeout(next, delay);
+    return () => window.clearTimeout(id);
+  }, [text, deleting, wordIndex, words, typeMs, deleteMs, holdMs, gapMs]);
 
   return (
-    <span className="rotating-word" aria-live="off">
-      {/* Screen readers get the full list once instead of a changing word */}
+    <span className="typewriter">
+      {/* Screen readers get the full list once instead of letters changing */}
       <span className="sr-only">{words.join(', ')}</span>
-      {reduce ? (
-        <span aria-hidden="true" className="gradient-text inline-block">
-          {words[i]}
-        </span>
-      ) : (
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={words[i]}
-            aria-hidden="true"
-            className="gradient-text inline-block"
-            initial={{ y: '0.6em', opacity: 0, filter: 'blur(6px)' }}
-            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-            exit={{ y: '-0.6em', opacity: 0, filter: 'blur(6px)' }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {words[i]}
-          </motion.span>
-        </AnimatePresence>
-      )}
+      <span aria-hidden="true" className="gradient-text">
+        {text}
+      </span>
+      <span aria-hidden="true" className="typewriter-caret" />
     </span>
   );
 }

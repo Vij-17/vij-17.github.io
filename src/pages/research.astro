@@ -1,29 +1,43 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
+import InterestDeck, { type Interest } from '../components/InterestDeck.tsx';
 
-// Each interest is a short paragraph; edit, reorder or add freely. `source` is optional.
-const interests: { title: string; body: string; source?: { label: string; href: string } }[] = [
+// Each interest is one card: a title, a short paragraph, and the paper or source that inspired it
+// (clicking the card opens that link). Edit, reorder or add freely; the first one is on top of the stack.
+const interests: Interest[] = [
   {
+    id: 'in-vitro-in-vivo',
     title: 'Learning in vitro versus in vivo',
     body: 'Cultured cortical neurons adapt their activity when embedded in a closed sensory–motor loop, yet they learn more slowly and retain less than the same cells in an intact brain. I want to identify which properties of natural input (temporal correlation, multiscale spatial structure, behavioural contingency) are missing from artificial stimulation.',
+    source: { label: 'Kagan et al., Neuron (2022)', href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9747182/' },
   },
   {
+    id: 'integration',
     title: 'Plasticity and the integration of new neurons',
-    body: 'Revah and colleagues transplanted human cortical organoids into the somatosensory cortex of newborn rats. The human neurons matured further than the same organoids kept in a dish, received thalamic input, responded to whisker stimulation, and their activation could drive the rats’ reward-seeking behaviour: the host brain wired foreign neurons into its own circuits and learned to use their signals. I want to understand the plasticity that makes this integration possible, and what the host brain provides that a dish does not.',
+    body: 'Human cortical organoids transplanted into the somatosensory cortex of newborn rats matured further than the same organoids kept in a dish, received thalamic input, responded to whisker stimulation and could drive reward-seeking behaviour. I want to understand the plasticity that lets a host brain wire in foreign neurons, and what it provides that a dish does not.',
     source: { label: 'Revah et al., Nature (2022)', href: 'https://www.nature.com/articles/s41586-022-05277-w' },
   },
   {
+    id: 'coordination',
     title: 'Coordination between brain regions',
     body: 'Hippocampal sharp-wave ripples coincide with the reactivation of recent experience in the neocortex, which is thought to consolidate memory. My honours thesis focused on detecting these events in primate recordings; the broader question is how two regions time their activity so precisely.',
+    source: { label: 'Buzsáki, Hippocampus (2015)', href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4648295/' },
   },
   {
+    id: 'emergence',
     title: 'Emergence and self-organisation',
     body: 'A single cell develops into an organism, and a regenerating tissue knows when to stop growing. Both depend on local interactions producing global order. I find the same question in neural circuits: how cognition emerges from cells that each follow simple rules.',
+    source: { label: 'Wolfram, A New Kind of Science (2002)', href: 'https://www.wolframscience.com/nks/' },
   },
   {
+    id: 'silicon',
     title: 'Living neurons and silicon',
     body: 'In the long term I want to work at the interface of biological neural systems and computing hardware, through neuromorphic engineering, neuroAI and biological computing with neuronal cultures and organoids.',
+    source: {
+      label: 'Smirnova et al., Frontiers in Science (2023)',
+      href: 'https://www.frontiersin.org/journals/science/articles/10.3389/fsci.2023.1017235/full',
+    },
   },
 ];
 ---
@@ -49,23 +63,7 @@ const interests: { title: string; body: string; source?: { label: string; href: 
 
   <section class="wrap mt-20" aria-labelledby="interests">
     <h2 id="interests" class="section-title mb-10">Interests</h2>
-    <dl class="interests">
-      {
-        interests.map((item) => (
-          <div class="interest">
-            <dt class="font-semibold text-[1.1rem]">{item.title}</dt>
-            <dd class="mt-2 text-fg/90">
-              {item.body}
-              {item.source && (
-                <a href={item.source.href} target="_blank" rel="noopener" class="text-link mt-2 block w-fit text-[0.95rem] text-fg-muted">
-                  {item.source.label}
-                </a>
-              )}
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
+    <InterestDeck client:visible items={interests} />
   </section>
 </Base>
 
@@ -75,18 +73,5 @@ const interests: { title: string; body: string; source?: { label: string; href: 
   }
   .question-box:hover {
     transform: none;
-  }
-  .interests {
-    display: grid;
-    gap: 2.5rem 4rem;
-    max-width: 62rem;
-  }
-  @media (min-width: 820px) {
-    .interests {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  .interest {
-    max-width: 30rem;
   }
 </style>

@@ -288,6 +288,41 @@ body > * {
   color: var(--color-fg-muted);
 }
 
+/* Research interest deck (InterestDeck.tsx) */
+.deck {
+  display: grid;
+  padding-bottom: 2.5rem; /* room for the cards fanned out behind */
+}
+.deck-slot {
+  grid-area: 1 / 1; /* every card shares one cell, so the deck is as tall as its tallest card */
+  transform-origin: 50% 100%;
+}
+.deck-card {
+  --glow-shell: rgb(38 38 38); /* opaque, so cards behind do not show through */
+  --glow-panel: rgb(23 23 23 / 0.92);
+  display: block;
+  height: 100%;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  cursor: pointer;
+  user-select: none;
+}
+.deck-card:hover {
+  transform: none;
+}
+.interest-grid {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 820px) {
+  .interest-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* An odd last card spans the full width so the grid stays even */
+  .interest-grid > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
 /* Typewriter caret for the "Currently thinking about" line */
 .typewriter-caret {
   display: inline-block;

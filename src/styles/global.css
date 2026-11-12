@@ -1,9 +1,8 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/fraunces/full.css';
-@import '@fontsource/ibm-plex-sans/400.css';
-@import '@fontsource/ibm-plex-sans/400-italic.css';
-@import '@fontsource/ibm-plex-sans/500.css';
-@import '@fontsource/ibm-plex-sans/600.css';
+/* Headings: Gloock, a high-contrast display serif. Body: Hanken Grotesk. */
+@import '@fontsource/gloock/400.css';
+@import '@fontsource-variable/hanken-grotesk/wght.css';
+@import '@fontsource-variable/hanken-grotesk/wght-italic.css';
 
 /* Design tokens, taken from cuicui.day's dark theme: the Tailwind neutral scale
    (neutral-950 page, neutral-900 raised surfaces, neutral-800 lines, neutral-50 text, neutral-400 muted text)
@@ -20,8 +19,8 @@
   --color-violet: #8b5cf6;
   --color-orange: #fb923c;
 
-  --font-display: 'Fraunces Variable', Georgia, serif;
-  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-display: 'Gloock', Georgia, serif;
+  --font-sans: 'Hanken Grotesk Variable', system-ui, sans-serif;
 }
 
 :root {
@@ -99,19 +98,17 @@ body > * {
 
 .display {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
   font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.08;
+  letter-spacing: -0.003em; /* Gloock is already tightly fitted */
+  line-height: 1.1;
 }
 
 .section-title {
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 100;
   font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.25rem);
   font-weight: 400;
   line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 /* Links in running text: grey underline that fills with the gradient on hover */
@@ -226,7 +223,6 @@ body > * {
 .prose-site h2 {
   margin-top: 2.2em;
   font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 100;
   font-size: 1.6rem;
   line-height: 1.2;
 }

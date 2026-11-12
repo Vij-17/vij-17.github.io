@@ -11,7 +11,7 @@ export const site = {
 
   // One sentence under your name on the home page.
   intro:
-    'Neuroscience MSc student at the University of Helsinki, asking why & how neurons learn differently in a living brain than in a dish.',
+    'Neuroscience MSc student at the University of Helsinki, asking why and how neurons learn differently in a living brain than in a dish.',
 
   // The words that rotate in the hero line "Currently thinking about …".
   thinkingAbout: [
@@ -33,7 +33,7 @@ export const site = {
   },
 
   // Put your CV in /public as cv.pdf, then change this to '/cv.pdf'. While it is '', the download button is hidden.
-  cvPdf: '',
+  cvPdf: '/cv.pdf',
 
   location: 'Helsinki, Finland',
 
@@ -45,8 +45,8 @@ export const site = {
 // Education and research path, newest first. Shown as the timeline.
 export const path = [
   {
-    when: '2026 – Present',
-    title: 'MSc, Master’s Programme in Neuroscience (MNeuro)',
+    when: 'Sept 2026 – expected 2028',
+    title: 'MSc, Master’s Programme in Neuroscience',
     where: 'University of Helsinki, Finland',
     detail:
       'Systems, cellular and computational neuroscience; preparing for thesis work in a systems neuroscience lab.',
@@ -54,15 +54,15 @@ export const path = [
   },
   {
     when: 'Jan – Apr 2026',
-    title: 'Honours thesis: sharp-wave ripples in the primate hippocampus',
-    where: 'GITAM Deemed to be University, supervised by Dr Niranjan A. Kambi',
+    title: 'Honours research thesis: detection of sharp-wave ripples and their role in primate memory',
+    where: 'Department of Life Sciences, GITAM University, supervised by Dr Niranjan A. Kambi',
     detail:
-      'Built a reproducible MATLAB and Brainstorm workflow to preprocess Plexon recordings and detect sharp-wave ripples in local field potentials.',
+      'Analysed hippocampal LFPs from a non-human primate performing a context-dependent associative memory task, using a MATLAB and Brainstorm pipeline to detect sharp-wave ripples and align them to task events.',
   },
   {
-    when: '2022 – 2026',
-    title: 'BSc (Honours) Biotechnology, minor in Bioinformatics',
-    where: 'GITAM Deemed to be University, India',
+    when: '2022 – Apr 2026',
+    title: 'BSc (Honours with Research) in Biotechnology, Minor in Bioinformatics',
+    where: 'GITAM (Deemed to be University), Visakhapatnam, India',
     detail: 'Molecular biology foundations with a computational minor.',
   },
 ];
